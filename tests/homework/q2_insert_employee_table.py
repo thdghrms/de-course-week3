@@ -9,17 +9,28 @@
 # password: postgres
 
 # 아래에서 pass를 지우고 로직을 작성하세요
-# 아래 함수를 실행하면, visitor의 값이 null인 레코드가 visit_log테이블에 존재하면 안됩니다.
-def delete_null_visit():
+# 아래 함수를 실행하면, employee 테이블에 과제에 제시된 레코드가 존재해야합니다.
+import pytest
+
+
+def insert_employee_table():
     pass
 
 
 
 
 # 여기서부터는 절대 건들지 마세요
-def test_delete_null_visit():
-    delete_null_visit()
-    verify()
+from tests.score.criteria import Q2Score
+from tests.util.fixtures import *
+from tests.homework.q1_create_employee_table import create_employee_table
+
+@pytest.fixture
+def create_employee_table_fixture():
+    create_employee_table()
+
+def test_insert_employee_table(drop_schema_if_exist, create_schema_if_not_exist, create_employee_table_fixture):
+    insert_employee_table()
+    Q2Score().score()
 
 
 

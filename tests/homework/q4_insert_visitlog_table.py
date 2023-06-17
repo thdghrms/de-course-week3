@@ -17,16 +17,14 @@ def insert_visit_log_table():
 
 
 # 여기서부터는 절대 건들지 마세요
-def test_insert_visit_log_table():
+from tests.score.criteria import Q4Score
+from tests.util.fixtures import *
+from tests.homework.q3_create_visit_log import create_visit_log_table
+
+@pytest.fixture
+def create_visit_log_fixture():
+    create_visit_log_table()
+
+def test_insert_visit_log_table(drop_schema_if_exist, create_schema_if_not_exist, create_visit_log_fixture):
     insert_visit_log_table()
-    verify()
-
-
-
-
-
-
-
-
-def verify():
-    pass
+    Q4Score().score()

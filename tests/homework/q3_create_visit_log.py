@@ -9,20 +9,20 @@
 # password: postgres
 
 # 아래에서 pass를 지우고 로직을 작성하세요
-# 아래 함수를 실행하면, employee 테이블에서 Peach의 Position이 senior engineer가 되어야 합니다.
-def update_peach_position():
+# 아래 함수를 실행하면, 데이터베이스에 visit_log 테이블이 정의되어야 하며 요구사항을 준수하는 적절한 칼럼 타입과 제약사항이 설정되어야 합니다.
+def create_visit_log_table():
     pass
 
 
 
 
 # 여기서부터는 절대 건들지 마세요
-def test_update_peach_position():
-    update_peach_position()
-    verify()
+from tests.score.criteria import Q3Score
+from tests.util.fixtures import *
 
-
-
+def test_create_visit_log_table(drop_schema_if_exist, create_schema_if_not_exist):
+    create_visit_log_table()
+    Q3Score().score()
 
 
 

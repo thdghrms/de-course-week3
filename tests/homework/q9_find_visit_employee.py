@@ -19,9 +19,17 @@ def get_visitor_in_2022_07_11_09_00() -> list:
 
 
 # 여기서부터는 절대 건들지 마세요
-def test_get_visitor_in_2022_07_11_09_00():
-    get_visitor_in_2022_07_11_09_00()
-    verify()
+from tests.score.criteria import Q9Score
+from tests.util.fixtures import *
+from tests.homework.q4_insert_visitlog_table import create_visit_log_fixture
+from tests.homework.q2_insert_employee_table import create_employee_table_fixture
+
+
+def test_get_visitor_in_2022_07_11_09_00(drop_schema_if_exist, create_schema_if_not_exist,
+                                         create_employee_table_fixture, create_visit_log_fixture,
+                                         prepare_employees, prepare_visit_logs):
+    actual = get_visitor_in_2022_07_11_09_00()
+    Q9Score(actual).score()
 
 
 

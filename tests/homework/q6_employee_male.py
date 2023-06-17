@@ -19,9 +19,14 @@ def find_employee_male_table() -> list:
 
 
 # 여기서부터는 절대 건들지 마세요
-def test_find_employee_male_table():
-    find_employee_male_table()
-    verify()
+from tests.score.criteria import Q6Score
+from tests.util.fixtures import *
+from tests.homework.q2_insert_employee_table import create_employee_table_fixture
+
+def test_find_employee_male_table(drop_schema_if_exist, create_schema_if_not_exist, create_employee_table_fixture,
+                                    prepare_employees):
+    actual = find_employee_male_table()
+    Q6Score(actual).score()
 
 
 

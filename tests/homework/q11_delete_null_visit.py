@@ -9,19 +9,23 @@
 # password: postgres
 
 # 아래에서 pass를 지우고 로직을 작성하세요
-# 아래 함수를 실행하면, Tuple 리스트를 반환해야합니다.
-# 리턴 타입의 예는 아래와 같습니다.
-# [(30, "woman_name1"), (23, "woman_name2")]
-def find_employee_female_table() -> list:
+# 아래 함수를 실행하면, visitor의 값이 null인 레코드가 visit_log테이블에 존재하면 안됩니다.
+def delete_null_visit():
     pass
 
 
 
 
 # 여기서부터는 절대 건들지 마세요
-def test_find_employee_female_table():
-    find_employee_female_table()
-    verify()
+from tests.score.criteria import Q11Score
+from tests.util.fixtures import *
+from tests.homework.q4_insert_visitlog_table import create_visit_log_fixture
+
+
+def test_delete_null_visit(drop_schema_if_exist, create_schema_if_not_exist, create_visit_log_fixture,
+                           prepare_visit_logs):
+    delete_null_visit()
+    Q11Score().score()
 
 
 

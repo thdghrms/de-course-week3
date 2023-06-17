@@ -19,9 +19,14 @@ def get_total_visit_in_2022_07_12() -> int:
 
 
 # 여기서부터는 절대 건들지 마세요
-def test_get_total_visit_in_2022_07_12():
-    get_total_visit_in_2022_07_12()
-    verify()
+from tests.score.criteria import Q7Score
+from tests.util.fixtures import *
+from tests.homework.q4_insert_visitlog_table import create_visit_log_fixture
+
+def test_get_total_visit_in_2022_07_12(drop_schema_if_exist, create_schema_if_not_exist, create_visit_log_fixture,
+                                    prepare_visit_logs):
+    actual = get_total_visit_in_2022_07_12()
+    Q7Score(actual).score()
 
 
 

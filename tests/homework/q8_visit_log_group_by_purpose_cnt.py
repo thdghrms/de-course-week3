@@ -19,9 +19,14 @@ def get_total_visit_by_purpose() -> list:
 
 
 # 여기서부터는 절대 건들지 마세요
-def test_get_total_visit_by_purpose():
-    get_total_visit_by_purpose()
-    verify()
+from tests.score.criteria import Q8Score
+from tests.util.fixtures import *
+from tests.homework.q4_insert_visitlog_table import create_visit_log_fixture
+
+def test_get_total_visit_by_purpose(drop_schema_if_exist, create_schema_if_not_exist, create_visit_log_fixture,
+                                    prepare_visit_logs):
+    actual = get_total_visit_by_purpose()
+    Q8Score(actual).score()
 
 
 
