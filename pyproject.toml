@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "de-course-week2"
+name = "de-course-week3"
 version = "0.0.1"
-description = "데이터 엔지니어링 기초 코스 2주차 예제 및 과제"
+description = "데이터 엔지니어링 기초 코스 3주차 예제 및 과제"
 authors = ["현문덕 <edu.moonduck@gmail.com>"]
 
 [build-system]
