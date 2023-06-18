@@ -1,4 +1,6 @@
+import re
 from abc import ABC, abstractmethod
+from datetime import datetime
 from typing import Tuple, List, Set, Any, Callable, Dict
 import logging
 from tests.util.datastructure import ColumnMeta
@@ -162,23 +164,35 @@ class ModifyRecordProblem(HwScore):
         pass
 
     def score(self) -> int:
-        if self.truncate:
-            try:
-                dbutil.execute_sql(f"TRUNCATE table {self.table_name}")
-            except Exception:
-                logging.exception(f"Can't truncate table {self.table_name}")
-                raise Exception(f"Can't truncate table {self.table_name}")
-
         actual = dbutil.fetch_all(f"select * from {self.table_name} order by {self.order_by_col()}", ())
         expected = self.get_expected_data()
 
         logging.info("Validating data")
-        if actual == expected:
+
+        # Remove padding spaces for char(n) column
+        sanitized_actual = _sanitize_columns(actual)
+
+        if sanitized_actual == expected:
             return self.max_score
         else:
             logging.warning("Insert 후 결과 값이 예상 값이 아닙니다. Expected %s, Actual %s", expected, actual)
             raise Exception(f"Insert 후 결과 값이 예상 값이 아닙니다. Expected {expected}, Actual {actual}")
 
+def _sanitize_columns(values: list[Tuple]) -> Tuple:
+    return [_sanitize_column_values(x) for x in values]
+
+def _sanitize_column_values(value: Tuple) -> Tuple:
+    return tuple([_sanitize_column_value(x) for x in value])
+
+def _sanitize_column_value(value: Any) -> Any:
+    if isinstance(value, str):
+        newV = value.strip()
+        if re.match(r'^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$', newV):
+            return datetime.strptime(newV, '%Y-%m-%d %H:%M:%S')
+        else:
+            return newV
+    else:
+        return value
 
 class SelectRecordProblem(HwScore):
     def __init__(self, max_score: int, actual: Any):
@@ -194,13 +208,15 @@ class SelectRecordProblem(HwScore):
         pass
 
     def score(self) -> int:
-        actual_sorted = self.sort_actual(self.actual)
+        if isinstance(self.actual, list):
+            self.sort_actual(self.actual)
+            self.actual = _sanitize_columns(self.actual)
 
         expected = self.get_expected_data()
 
         logging.info("Validating data")
-        if actual_sorted == expected:
+        if self.actual == expected:
             return self.max_score
         else:
-            logging.warning("Query 결과 값이 예상 값이 아닙니다. Expected %s, Actual %s", expected, actual)
-            return 0
+            logging.warning("Query 결과 값이 예상 값이 아닙니다. Expected %s, Actual %s", expected, self.actual)
+            raise Exception(f"Query 결과 값이 예상 값이 아닙니다. Expected {expected}, Actual {self.actual}")
