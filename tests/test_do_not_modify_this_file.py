@@ -31,7 +31,7 @@ def test_create_employee_table(drop_schema_if_exist, create_schema_if_not_exist)
     Q1Score().score()
 
 
-def test_insert_employee_table(drop_schema_if_exist, create_schema_if_not_exist, create_employee_table_fixture):
+def test_create_employees(drop_schema_if_exist, create_schema_if_not_exist, create_employee_table_fixture):
     insert_employee_table()
     Q2Score().score()
 
@@ -41,36 +41,36 @@ def test_create_visit_log_table(drop_schema_if_exist, create_schema_if_not_exist
     Q3Score().score()
 
 
-def test_insert_visit_log_table(drop_schema_if_exist, create_schema_if_not_exist, create_visit_log_fixture):
+def test_create_visit_logs(drop_schema_if_exist, create_schema_if_not_exist, create_visit_log_fixture):
     insert_visit_log_table()
     Q4Score().score()
 
 
-def test_find_employee_female_table(drop_schema_if_exist, create_schema_if_not_exist, create_employee_table_fixture,
+def test_female_employee(drop_schema_if_exist, create_schema_if_not_exist, create_employee_table_fixture,
                                     prepare_employees):
     actual = find_employee_female_table()
     Q5Score(actual).score()
 
 
-def test_find_employee_male_table(drop_schema_if_exist, create_schema_if_not_exist, create_employee_table_fixture,
+def test_male_employee(drop_schema_if_exist, create_schema_if_not_exist, create_employee_table_fixture,
                                   prepare_employees):
     actual = find_employee_male_table()
     Q6Score(actual).score()
 
 
-def test_get_total_visit_in_2022_07_12(drop_schema_if_exist, create_schema_if_not_exist, create_visit_log_fixture,
+def test_cnt_visit_log(drop_schema_if_exist, create_schema_if_not_exist, create_visit_log_fixture,
                                     prepare_visit_logs):
     actual = get_total_visit_in_2022_07_12()
     Q7Score(actual).score()
 
 
-def test_get_total_visit_by_purpose(drop_schema_if_exist, create_schema_if_not_exist, create_visit_log_fixture,
+def test_group_by_visit_log_purpose(drop_schema_if_exist, create_schema_if_not_exist, create_visit_log_fixture,
                                     prepare_visit_logs):
     actual = get_total_visit_by_purpose()
     Q8Score(actual).score()
 
 
-def test_get_visitor_in_2022_07_11_09_00(drop_schema_if_exist, create_schema_if_not_exist,
+def test_find_visit_employee(drop_schema_if_exist, create_schema_if_not_exist,
                                          create_employee_table_fixture, create_visit_log_fixture,
                                          prepare_employees, prepare_visit_logs):
     actual = get_visitor_in_2022_07_11_09_00()

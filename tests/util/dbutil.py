@@ -7,7 +7,9 @@ DB_PASSWORD = "postgres"
 DB_NAME = "postgres"
 DB_HOST = os.getenv("POSTGRES_HOST", "localhost")
 
-
+"""
+채점을 위한 파일입니다. 수정하지 마세요.
+"""
 def execute_sql(query: str, param: Tuple = ()):
     with psycopg.connect(f"host={DB_HOST} dbname={DB_NAME} user={DB_USER} password={DB_PASSWORD}") as conn:
         with conn.cursor() as cur:

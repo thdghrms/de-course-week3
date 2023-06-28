@@ -4,7 +4,9 @@ from tests.util.dbutil import *
 from tests.data.all_data import *
 import base64
 
-
+"""
+채점을 위한 파일입니다. 수정하지 마세요.
+"""
 @pytest.fixture
 def drop_schema_if_exist():
     logging.info("DROP schema public")
