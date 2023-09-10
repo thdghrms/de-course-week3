@@ -15,5 +15,17 @@ Hint: delete를 사용하세요
 # user: postgres
 # password: postgres
 """
+import psycopg2
+# Connect to your postgres DB
+conn = psycopg2.connect("host=localhost, dbname=postgres user=postgres password=postgres")
+# Open a cursor to perform database operations
+cur = conn.cursor()
+
+# Execute a query
+
 def delete_null_visit():
-    pass
+    cur.execute("delete from visit_log where visitor is null;")
+    conn.commit()
+    return
+
+delete_null_visit()

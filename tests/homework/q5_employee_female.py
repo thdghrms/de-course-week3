@@ -15,5 +15,21 @@
 # user: postgres
 # password: postgres
 """
+
+import psycopg2
+# Connect to your postgres DB
+conn = psycopg2.connect("host=localhost, dbname=postgres user=postgres password=postgres")
+# Open a cursor to perform database operations
+cur = conn.cursor()
+
+# Execute a query
+
+
 def find_employee_female_table() -> list:
-    pass
+    cur.execute("select age, position from employee where gender='Female';")
+    x =cur.fetchall()
+    conn.commit
+    return x
+
+print(find_employee_female_table())
+#리스트로 리턴 되야함.

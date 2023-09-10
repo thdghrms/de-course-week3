@@ -22,5 +22,27 @@ Q1. 아래 함수를 실행하면, 데이터베이스에 employee 테이블이 �
 # user: postgres
 # password: postgres
 """
-def create_employee_table():
-    pass
+
+import psycopg2
+# Connect to your postgres DB
+conn = psycopg2.connect("host=localhost, dbname=postgres user=postgres password=postgres")
+# Open a cursor to perform database operations
+cur = conn.cursor()
+
+# regulate Table Columns
+column_data = [
+    'emp_id varchar(6) not null primary key Check(emp_id ~* \'^[A-Z]{1}[0-9]{5}\')',
+    'gender varchar(10) not null',
+    'name varchar(20) not null',
+    'address varchar(100)',
+    'department int',
+    'manager varchar(6)',
+    'age int not null',
+    'position varchar(30)']
+
+def create_employee_table(cols):
+        cur.execute("create Table employee({0})".format(','.join(cols)))
+        conn.commit()
+
+
+create_employee_table(column_data)

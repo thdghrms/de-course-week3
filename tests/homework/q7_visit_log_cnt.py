@@ -15,5 +15,20 @@
 # user: postgres
 # password: postgres
 """
+import psycopg2
+# Connect to your postgres DB
+conn = psycopg2.connect("host=localhost, dbname=postgres user=postgres password=postgres")
+# Open a cursor to perform database operations
+cur = conn.cursor()
+
+# Execute a query
+
+
 def get_total_visit_in_2022_07_12() -> int:
-    pass
+    cur.execute("select count(*) from visit_log where date(enter)='2022-07-12';")
+    x = cur.fetchmany(size=1)
+    a = str(x)
+    conn.commit()
+    return int(''.join(a[2]))
+
+print(get_total_visit_in_2022_07_12())

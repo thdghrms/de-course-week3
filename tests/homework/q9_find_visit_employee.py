@@ -16,5 +16,18 @@
 # user: postgres
 # password: postgres
 """
+import psycopg2
+# Connect to your postgres DB
+conn = psycopg2.connect("host=localhost, dbname=postgres user=postgres password=postgres")
+# Open a cursor to perform database operations
+cur = conn.cursor()
+
+# Execute a query
+
 def get_visitor_in_2022_07_11_09_00() -> list:
-    pass
+    cur.execute("select name, department, emp_id from employee join visit_log on employee.emp_id=visit_log.visitor where enter=('2022-07-11 09:00:00');")
+    x = cur.fetchall()
+    conn.commit()
+    return x
+
+print(get_visitor_in_2022_07_11_09_00())

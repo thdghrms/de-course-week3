@@ -16,5 +16,19 @@
 # user: postgres
 # password: postgres
 """
+import psycopg2
+# Connect to your postgres DB
+conn = psycopg2.connect("host=localhost, dbname=postgres user=postgres password=postgres")
+# Open a cursor to perform database operations
+cur = conn.cursor()
+
+# Execute a query
+
+
 def get_total_visit_by_purpose() -> list:
-    pass
+    cur.execute("select purpose, count(*) from visit_log group by purpose;")   
+    x = cur.fetchmany(size=2)
+    conn.commit()
+    return x
+
+print(get_total_visit_by_purpose())

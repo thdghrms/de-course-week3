@@ -31,5 +31,28 @@ K의 department와 manager의 값은 빈 문자열('')이 아닌 null입니다, 
 # user: postgres
 # password: postgres
 """
-def insert_employee_table():
-    pass
+
+
+import psycopg2
+# Connect to your postgres DB
+conn = psycopg2.connect("host=localhost, dbname=postgres user=postgres password=postgres")
+# Open a cursor to perform database operations
+cur = conn.cursor()
+
+# Execute a query
+def insert_employee_table(a, b, c, d, e, f, g, h):
+    if f == 'null':
+        cur.execute("insert into employee values ('%s','%s','%s','%s',%s,%s,%s,'%s'); " % (a, b, c, d, e, f, g, h))
+    else:
+        cur.execute("insert into employee values ('%s','%s','%s','%s',%s,'%s',%s,'%s'); " % (a, b, c, d, e, f, g, h))
+    conn.commit()
+    return
+
+insert_employee_table('A00001', 'Male','Moon','10-199, Gang-nam, Seoul',1,'C00001',30,'Senior engineer')
+insert_employee_table('B00100', 'Female','Sun','587/8, Gwan-ak, Seoul',2,'B00102',25,'Associate marketer')    
+insert_employee_table('A08771', 'Others','Peach','203-3, Guro, Seoul',1,'C00001',26,'Junior engineer')
+insert_employee_table('C00129', 'Male','Alex','20-331, Bundang, Gyonggi',3,'C00002',40,'Director')
+insert_employee_table('C00001', 'Male','Lion','53-3, Namyang-ju, Gyonghi',1,'C00000',55,'CTO')
+insert_employee_table('C00002', 'Others','Cindy','100, Jong-ro, Seoul',3,'C00000',52,'Director')
+insert_employee_table('B00102', 'Female','Ran','290-10, Gwanghwamun, Seoul',2,'C00000',45,'Director')
+insert_employee_table('C00000', 'Male','K','1010, Sung-soo, Seoul','null','null',51,'CEO')
